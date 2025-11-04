@@ -1,28 +1,37 @@
 module.exports = {
   config: {
     name: "uptime",
-    aliases: ["up", "upt"],
+aliases: ["upt"],
     version: "1.0",
-    author: "XyryllPanget",
+    author: "OtinXSandip",
     role: 0,
     shortDescription: {
-      en: "Displays the uptime of the bot."
+      en: "Displays the total number of users of the bot and check uptime "
     },
     longDescription: {
-      en: "Displays the amount of time that the bot has been running for."
+      en: "Displays the total number of users who have interacted with the bot and check uptime."
     },
-    category: "System",
+    category: "info",
     guide: {
-      en: "Use {p}uptime to display the uptime of the bot."
+      en: "Type {pn}"
     }
   },
-  onStart: async function ({ api, event, args }) {
-    const uptime = process.uptime();
-    const seconds = Math.floor(uptime % 60);
-    const minutes = Math.floor((uptime / 60) % 60);
-    const hours = Math.floor((uptime / (60 * 60)) % 24);
-    const days = Math.floor(uptime / (60 * 60 * 24));
-    const uptimeString = `${hours} hours ${minutes} minutes ${seconds} second`;
-    api.sendMessage(`hello user, the bot has been running for ${uptimeString}.`, event.threadID);
+  onStart: async function ({ api, event, args, usersData, threadsData }) {
+    try {
+      const allUsers = await usersData.getAll();
+      const allThreads = await threadsData.getAll();
+      const uptime = process.uptime();
+      
+      const hours = Math.floor(uptime / 3600);
+      const minutes = Math.floor((uptime % 3600) / 60);
+      const seconds = Math.floor(uptime % 60);
+      
+      const uptimeString = `${hours}Hrs ${minutes}min ${seconds}sec`;
+      
+      api.sendMessage(`»「UPTIME」«\n\n⏰ | Running Time:\n❯» [${uptimeString}]\n\n🚸 | Total Users: ${allUsers.length}\n\n📊 | Total Threads: ${allThreads.length}`, event.threadID);
+    } catch (error) {
+      console.error(error);
+      api.sendMessage("An error occurred while retrieving data.", event.threadID);
+    }
   }
 };
