@@ -36,18 +36,3 @@ module.exports = {
 
     const replyID = event.messageReply?.senderID;
     const amount = parseInt(args[0]);
-if (!replyID || !amount || amount <= 0) {
-      return message.reply(getLang("fail"));
-    }
-
-    const userData = await usersData.get(replyID);
-    await usersData.set(replyID, {
-      money: userData.money + amount,
-      exp: userData.exp,
-      data: userData.data
-    });
-
-    const name = userData.name || "user";
-    message.reply(getLang("success", name, amount));
-  }
-};
