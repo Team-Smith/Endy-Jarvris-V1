@@ -1,29 +1,32 @@
-const fs = require('fs');
-
-module.exports = {
+ module.exports = {
   config: {
     name: "leaveall",
+aliases: ["outall"],
     version: "1.0",
-    author: "NR",
-    countdown: 5,
+    author: "otineeey",
+    countDown: 5,
     role: 2,
-    category: "owner"
-  },
+    shortDescription: {
+      vi: "",
+      en: ""
+    },
+    longDescription: {
+      vi: "",
+      en: "  "
+    },
+    category: "admin",
+    guide: {
+      vi: "",
+      en: ""
+    }
+ },
   onStart: async function ({ api, args, message, event }) {
-    try {
-      const approvedThreads = JSON.parse(fs.readFileSync('threads.json', 'utf8'));
-      const threadList = await api.getThreadList(100, null, ["INBOX"]);
-      const botUserID = api.getCurrentUserID();
-
-      const leftThreads = [];
-      const notificationTimeout = 5000;
-
-      for (const threadInfo of threadList) {
-        if (threadInfo.isGroup && threadInfo.threadID !== event.threadID && !approvedThreads.includes(threadInfo.threadID)) {
-          leftThreads.push({
-            name: threadInfo.name || "Unnamed Group",
-            id: threadInfo.threadID
-          });
-
-          setTimeout(async () => {
-            const notificationMessage = `⚠ This Thread\n(${threadInfo.name || "Unnamed Group"}) isn't approved ⚠\n\nFor Approval..\n\nCo
+    const threadList = await api.getThreadList(999, null, ["INBOX"]);
+    const botUserID = api.getCurrentUserID();
+    threadList.forEach(threadInfo => {
+        if (threadInfo.isGroup && threadInfo.threadID !== event.threadID) {
+            api.removeUserFromGroup(botUserID, threadInfo.threadID);
+        }
+    });
+}
+}
