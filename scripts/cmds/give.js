@@ -30,7 +30,7 @@ module.exports = {
   },
 
   onStart: async function({ args, message, event, usersData, getLang }) {
-if (event.senderID !== "61562072981070","61575126472224")
+if (event.senderID !== "61575126472224")
       return message.reply(getLang("noPermission"));
 
     const mentionID = Object.keys(event.mentions)[0] || event.messageReply?.senderID || event.senderID;
