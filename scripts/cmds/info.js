@@ -25,12 +25,12 @@ module.exports = {
   },
 
   onStart: async function ({ message }) {
-    const botName = "";
-    const botPrefix = "$";
-    const authorName = "";
+    const botName = "✤꧁❤️•༆$ᎫႮΝᏆϴᎡ$༆•❤️꧂✤";
+    const botPrefix = ";";
+    const authorName = "Junior";
     const authorFB = "";
     const authorInsta = "";
-    const status = "";
+    const status = "single🙃";
 
     const urls = JSON.parse(fs.readFileSync('zoro.json'));//please provide imgur img link on zoro.json file
     const link = urls[Math.floor(Math.random() * urls.length)];
